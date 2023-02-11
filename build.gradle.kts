@@ -30,6 +30,7 @@ plugins {
     id("org.jetbrains.kotlin.jvm") version "1.7.10"
     signing
     id("com.gradle.plugin-publish") version "1.0.0"
+    jacoco
 }
 
 repositories {
@@ -77,6 +78,25 @@ tasks.named<Task>("check") {
 tasks.named<Test>("test") {
     // Use JUnit Jupiter for unit tests.
     useJUnitPlatform()
+}
+
+jacoco {
+    toolVersion = "0.8.8"
+    //reportsDirectory.set(layout.buildDirectory.dir("customJacocoReportDir"))
+}
+
+tasks.test {
+    // generate reports after running tests
+    finalizedBy(tasks.jacocoTestReport)
+}
+
+tasks.jacocoTestReport {
+    reports {
+        // activate jacoco xml for codecov
+        xml.required.set(true)
+    }
+    // make sure tests run before generating reports
+    dependsOn(tasks.test)
 }
 
 signing {

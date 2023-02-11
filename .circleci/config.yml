@@ -1,8 +1,24 @@
 version: 2.1
 
-orbs:
-  gradle: circleci/gradle@3.0.0
+jobs:
+  run-codecov:
+    docker:
+      - image: cimg/openjdk:11.0
+    resource_class: small
+    steps:
+      - checkout
+      - run:
+          name: Run tests with coverage report
+          command: |
+            ./gradlew test
+      - run:
+          name: Upload the report to Codecov
+          command: |
+            curl -Os https://uploader.codecov.io/latest/linux/codecov
+            chmod +x codecov
+            ./codecov
+
 workflows:
   checkout-build-test:
     jobs:
-      - gradle/test
+      - run-codecov

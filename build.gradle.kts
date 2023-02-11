@@ -40,6 +40,7 @@ repositories {
 dependencies {
     // Use JUnit test framework for unit tests
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
+    testImplementation(gradleTestKit())
 }
 
 gradlePlugin {
@@ -56,8 +57,7 @@ gradlePlugin {
 }
 
 // Add a source set for the functional test suite
-val functionalTestSourceSet = sourceSets.create("functionalTest") {
-}
+val functionalTestSourceSet = sourceSets.create("functionalTest") {}
 
 configurations["functionalTestImplementation"].extendsFrom(configurations["testImplementation"])
 
@@ -94,8 +94,10 @@ tasks.jacocoTestReport {
     reports {
         // activate jacoco xml for codecov
         xml.required.set(true)
+        xml.required.set(true)
     }
     // make sure tests run before generating reports
+    dependsOn(tasks.check)
     dependsOn(tasks.test)
 }
 

@@ -64,14 +64,21 @@ class ProduceConfigPlugin: Plugin<Project> {
         project.tasks.register("produce") { task ->
 
             task.doLast {
-                project.copy { copySpec ->
-                    copySpec.from("${project.rootDir}/$jsonFileName")
-                    copySpec.into("${project.projectDir}")
+                val fromPath = "${project.rootDir}/$jsonFileName"
+                val toPath = "${project.projectDir}"
+                val fromFile = File(fromPath)
+                val toFile = File("$toPath/$jsonFileName")
+
+                if (!fromFile.readText().contentEquals(toFile.readText())) {
+                    fromFile.copyTo(File(toPath), overwrite = true)
                 }
+
                 decodeJsonAndProduceConfigFile(
                     inputPath = "${project.projectDir}/$jsonFileName",
                     outputPath = "${project.projectDir}/$propFileName"
                 )
+
+                println("produce task finished")
             }
         }
     }

@@ -31,6 +31,7 @@ plugins {
     signing
     id("com.gradle.plugin-publish") version "1.0.0"
     jacoco
+    id("jacoco-report-aggregation")
 }
 
 repositories {
@@ -82,23 +83,24 @@ tasks.named<Test>("test") {
 
 jacoco {
     toolVersion = "0.8.8"
-    //reportsDirectory.set(layout.buildDirectory.dir("customJacocoReportDir"))
+    reportsDirectory.set(layout.buildDirectory.dir("mergedReportDir"))
 }
 
-tasks.test {
+tasks.check {
     // generate reports after running tests
     finalizedBy(tasks.jacocoTestReport)
 }
 
 tasks.jacocoTestReport {
+
     reports {
         // activate jacoco xml for codecov
         xml.required.set(true)
         xml.required.set(true)
     }
+
     // make sure tests run before generating reports
     dependsOn(tasks.check)
-    dependsOn(tasks.test)
 }
 
 signing {

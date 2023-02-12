@@ -8,10 +8,6 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Run unit tests with coverage report
-          command: |
-            ./gradlew test
-      - run:
           name: Run functional tests with coverage report
           command: |
             ./gradlew check
@@ -20,7 +16,7 @@ jobs:
           command: |
             curl -Os https://uploader.codecov.io/latest/linux/codecov
             chmod +x codecov
-            ./codecov
+            ./codecov -f build/mergedReportDir/test/jacocoTestReport.xml
 
 workflows:
   checkout-build-test:

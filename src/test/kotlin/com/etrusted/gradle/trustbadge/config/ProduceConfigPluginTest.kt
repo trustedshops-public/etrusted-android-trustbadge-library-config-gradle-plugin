@@ -52,12 +52,11 @@ class ProduceConfigPluginTest {
         val fakeId = "fakeId"
         val fakeSecret = "fakeSecret"
 
-        val inputFilePath = projectDir.path + "/$jsonFileName"
-        val outputFilePath = projectDir.path + "/$propFileName"
+        val outputFile = File(projectDir.path, propFileName)
+        val inputFile = File(projectDir.path, jsonFileName)
 
-        File(inputFilePath).apply {
-            createNewFile()
-            writeText("""
+        inputFile.writer().use {
+            it.write("""
                 {
                   "client_id": "$fakeId",
                   "client_secret": "$fakeSecret"
@@ -67,10 +66,9 @@ class ProduceConfigPluginTest {
 
         // act
         decodeJsonAndProduceConfigFile(
-            inputPath = inputFilePath,
-            outputPath = outputFilePath,
+            inputPath = inputFile.path,
+            outputPath = outputFile.path,
         )
-        val outputFile = File(outputFilePath)
 
         // assert
         assertTrue(outputFile.exists())

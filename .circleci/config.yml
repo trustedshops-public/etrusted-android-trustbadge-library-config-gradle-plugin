@@ -1,23 +1,23 @@
 version: 2.1
 
-references:
+commands:
+  restore_gradle_cache:
+    steps:
+      - restore_cache:
+          key: v1-gradle-wrapper-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}
+      - restore_cache:
+          key: v1-gradle-cache-{{ checksum "build.gradle.kts" }}
 
-  restore_gradle_cache: &restore_gradle_cache
-    restore_cache:
-      name: Restore Gradle Cache
-      keys:
-        # when lock file changes, use increasingly general patterns to restore cache
-        - gradle-repo-v1-{{ .Branch }}-{{ checksum "build.gradle.kts" }}
-        - gradle-repo-v1-{{ .Branch }}-
-        - gradle-repo-v1-
-
-  save_gradle_cache: &save_gradle_cache
-    save_cache:
-      name: Save Gradle Cache
-      paths:
-        - ~/.gradle
-      key: gradle-repo-v1-{{ .Branch }}-{{ checksum "build.gradle.kts" }}
-
+  save_gradle_cache:
+    steps:
+      - save_cache:
+          paths:
+            - ~/.gradle/wrapper
+          key: v1-gradle-wrapper-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}
+      - save_cache:
+          paths:
+            - ~/.gradle/caches
+          key: v1-gradle-cache-{{ checksum "build.gradle.kts" }}
 
 jobs:
   run-codecov:
@@ -26,12 +26,12 @@ jobs:
     resource_class: small
     steps:
       - checkout
-      - *restore_gradle_cache
+      - restore_gradle_cache
       - run:
           name: Run functional tests with coverage report
           command: |
             ./gradlew check
-      - *save_gradle_cache
+      - save_gradle_cache
 
       - run:
           name: Upload the report to Codecov

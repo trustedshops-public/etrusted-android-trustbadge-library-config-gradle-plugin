@@ -44,8 +44,8 @@ class ProduceConfigPlugin: Plugin<Project> {
     override fun apply(project: Project) {
         project.tasks.register("produce") { task ->
             task.doLast {
-                val jsonFile = File("${project.rootDir}/$jsonFileName")
-                val targetFile = File("${project.projectDir}/$jsonFileName")
+                val jsonFile = File(project.rootDir, jsonFileName)
+                val targetFile = File(project.projectDir, jsonFileName)
                 jsonFile.copyToTargetIfNotIdentical(targetFile)
                 decodeJsonAndProduceConfigFile(
                     inputPath = "${project.projectDir}/$jsonFileName",

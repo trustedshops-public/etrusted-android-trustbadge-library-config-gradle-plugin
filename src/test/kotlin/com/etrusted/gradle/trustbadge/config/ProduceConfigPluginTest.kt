@@ -87,11 +87,11 @@ class ProduceConfigPluginTest {
         val sourceContent = "Cologne"
         val targetContent = "Berlin"
 
-        val sourceFile = File(projectDir.path + "/fakeSource.md").apply {
+        val sourceFile = File(projectDir.path, "/fakeSource.md").apply {
             createNewFile()
             writeText(sourceContent)
         }
-        val targetFile = File(projectDir.path + "/fakeTarget.md").apply {
+        val targetFile = File(projectDir.path, "/fakeTarget.md").apply {
             createNewFile()
             writeText(targetContent)
         }
@@ -99,10 +99,10 @@ class ProduceConfigPluginTest {
         println(targetFile.readText())
 
         // act
-        val result = sourceFile.copyToTargetIfNotIdentical(targetFile)
+        val isNewFileCreated = sourceFile.copyToTargetIfNotIdentical(targetFile)
 
         // assert
-        assertTrue(result)
+        assertTrue(isNewFileCreated)
     }
 
     @Test fun `copy file to target returns false if identical`() {
@@ -111,11 +111,11 @@ class ProduceConfigPluginTest {
         val sourceContent = "Cologne"
         val targetContent = "Cologne"
 
-        val sourceFile = File(projectDir.path + "/fakeSource.md").apply {
+        val sourceFile = File(projectDir.path, "/fakeSource.md").apply {
             createNewFile()
             writeText(sourceContent)
         }
-        val targetFile = File(projectDir.path + "/fakeTarget.md").apply {
+        val targetFile = File(projectDir.path, "/fakeTarget.md").apply {
             createNewFile()
             writeText(targetContent)
         }
@@ -123,9 +123,9 @@ class ProduceConfigPluginTest {
         println(targetFile.readText())
 
         // act
-        val result = sourceFile.copyToTargetIfNotIdentical(targetFile)
+        val isNewFileCreated = sourceFile.copyToTargetIfNotIdentical(targetFile)
 
         // assert
-        assertFalse(result)
+        assertFalse(isNewFileCreated)
     }
  }

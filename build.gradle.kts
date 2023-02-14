@@ -23,7 +23,7 @@
  */
 
 group = "com.etrusted.gradle.trustbadge"
-version = "0.0.01"
+version = "0.0.02"
 
 plugins {
     `java-gradle-plugin`
@@ -96,7 +96,7 @@ tasks.jacocoTestReport {
     reports {
         // activate jacoco xml for codecov
         xml.required.set(true)
-        xml.required.set(true)
+        html.required.set(true)
     }
 
     // make sure tests run before generating reports

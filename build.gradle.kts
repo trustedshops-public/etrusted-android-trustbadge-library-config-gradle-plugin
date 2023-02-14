@@ -45,8 +45,8 @@ dependencies {
 }
 
 gradlePlugin {
-    website.set("https://github.com/trustedshops-public/trustbadge-config-gradle-plugin")
-    vcsUrl.set("https://github.com/trustedshops-public/trustbadge-config-gradle-plugin.git")
+    website.set("https://github.com/trustedshops-public/etrusted-android-trustbadge-library-config-gradle-plugin")
+    vcsUrl.set("https://github.com/trustedshops-public/etrusted-android-trustbadge-library-config-gradle-plugin.git")
 
     val produce by plugins.creating {
         id = "com.etrusted.gradle.trustbadge.config.produce"

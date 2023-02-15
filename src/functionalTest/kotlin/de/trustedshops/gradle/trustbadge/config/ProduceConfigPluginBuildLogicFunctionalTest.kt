@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package com.etrusted.gradle.trustbadge.config
+package de.trustedshops.gradle.trustbadge.config
 
 import org.gradle.testkit.runner.GradleRunner
 import org.junit.jupiter.api.io.TempDir
@@ -55,7 +55,7 @@ class ProduceConfigPluginBuildLogicFunctionalTest {
         """.trimIndent())
         buildFile.writeText("""
             plugins {
-                id("com.etrusted.gradle.trustbadge.config.produce")
+                id("de.trustedshops.gradle.trustbadge.config.produce")
             }
         """.trimIndent())
 

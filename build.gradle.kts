@@ -22,8 +22,8 @@
  * SOFTWARE.
  */
 
-group = "com.etrusted.gradle.trustbadge"
-version = "0.0.02"
+group = "de.trustedshops.gradle.trustbadge"
+version = "0.0.01"
 
 plugins {
     `java-gradle-plugin`
@@ -49,11 +49,11 @@ gradlePlugin {
     vcsUrl.set("https://github.com/trustedshops-public/etrusted-android-trustbadge-library-config-gradle-plugin.git")
 
     val produce by plugins.creating {
-        id = "com.etrusted.gradle.trustbadge.config.produce"
+        id = "de.trustedshops.gradle.trustbadge.config.produce"
         displayName = "Trustbadge-config gradle plugin"
         description = "This plugin converts the trustbadge-config.json file for Trustbadge into a set of resources that the Trustbadge library can use."
         tags.set(setOf("trustbadge", "trustbadge-config", "android"))
-        implementationClass = "com.etrusted.gradle.trustbadge.config.ProduceConfigPlugin"
+        implementationClass = "de.trustedshops.gradle.trustbadge.config.ProduceConfigPlugin"
     }
 }
 

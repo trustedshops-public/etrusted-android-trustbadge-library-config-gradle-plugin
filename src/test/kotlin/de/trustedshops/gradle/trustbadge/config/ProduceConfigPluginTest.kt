@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package com.etrusted.gradle.trustbadge.config
+package de.trustedshops.gradle.trustbadge.config
 
 import org.gradle.testfixtures.ProjectBuilder
 import org.junit.jupiter.api.io.TempDir
@@ -40,7 +40,7 @@ class ProduceConfigPluginTest {
     @Test fun `plugin registers task`() {
         // Create a test project and apply the plugin
         val project = ProjectBuilder.builder().build()
-        project.plugins.apply("com.etrusted.gradle.trustbadge.config.produce")
+        project.plugins.apply("de.trustedshops.gradle.trustbadge.config.produce")
 
         // Verify the result
         assertNotNull(project.tasks.findByName("produce"))

@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package com.etrusted.gradle.trustbadge.config
+package de.trustedshops.gradle.trustbadge.config
 
 import groovy.json.JsonSlurper
 import org.gradle.api.Plugin

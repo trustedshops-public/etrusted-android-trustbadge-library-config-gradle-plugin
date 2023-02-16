@@ -85,11 +85,11 @@ class ProduceConfigPluginTest {
         val sourceContent = "Cologne"
         val targetContent = "Berlin"
 
-        val sourceFile = File(projectDir.path, "/fakeSource.md").apply {
+        val sourceFile = File(projectDir.path, "fakeSource.md").apply {
             createNewFile()
             writeText(sourceContent)
         }
-        val targetFile = File(projectDir.path, "/fakeTarget.md").apply {
+        val targetFile = File(projectDir.path, "fakeTarget.md").apply {
             createNewFile()
             writeText(targetContent)
         }
@@ -109,11 +109,11 @@ class ProduceConfigPluginTest {
         val sourceContent = "Cologne"
         val targetContent = "Cologne"
 
-        val sourceFile = File(projectDir.path, "/fakeSource.md").apply {
+        val sourceFile = File(projectDir.path, "fakeSource.md").apply {
             createNewFile()
             writeText(sourceContent)
         }
-        val targetFile = File(projectDir.path, "/fakeTarget.md").apply {
+        val targetFile = File(projectDir.path, "fakeTarget.md").apply {
             createNewFile()
             writeText(targetContent)
         }

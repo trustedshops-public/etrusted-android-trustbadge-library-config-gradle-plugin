@@ -22,14 +22,16 @@
  * SOFTWARE.
  */
 
-group = "com.etrusted.gradle.trustbadge"
+group = "de.trustedshops.gradle.trustbadge"
 version = "0.0.01"
 
 plugins {
     `java-gradle-plugin`
     id("org.jetbrains.kotlin.jvm") version "1.7.10"
     signing
-    id("com.gradle.plugin-publish") version "1.0.0"
+    id("com.gradle.plugin-publish") version "1.1.0"
+    jacoco
+    id("jacoco-report-aggregation")
 }
 
 repositories {
@@ -39,24 +41,24 @@ repositories {
 dependencies {
     // Use JUnit test framework for unit tests
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
+    testImplementation(gradleTestKit())
 }
 
 gradlePlugin {
-    website.set("https://github.com/trustedshops-public/trustbadge-config-gradle-plugin")
-    vcsUrl.set("https://github.com/trustedshops-public/trustbadge-config-gradle-plugin.git")
+    website.set("https://github.com/trustedshops-public/etrusted-android-trustbadge-library-config-gradle-plugin")
+    vcsUrl.set("https://github.com/trustedshops-public/etrusted-android-trustbadge-library-config-gradle-plugin.git")
 
     val produce by plugins.creating {
-        id = "com.etrusted.gradle.trustbadge.config.produce"
+        id = "de.trustedshops.gradle.trustbadge.config.produce"
         displayName = "Trustbadge-config gradle plugin"
         description = "This plugin converts the trustbadge-config.json file for Trustbadge into a set of resources that the Trustbadge library can use."
         tags.set(setOf("trustbadge", "trustbadge-config", "android"))
-        implementationClass = "com.etrusted.gradle.trustbadge.config.ProduceConfigPlugin"
+        implementationClass = "de.trustedshops.gradle.trustbadge.config.ProduceConfigPlugin"
     }
 }
 
 // Add a source set for the functional test suite
-val functionalTestSourceSet = sourceSets.create("functionalTest") {
-}
+val functionalTestSourceSet = sourceSets.create("functionalTest") {}
 
 configurations["functionalTestImplementation"].extendsFrom(configurations["testImplementation"])
 
@@ -77,6 +79,28 @@ tasks.named<Task>("check") {
 tasks.named<Test>("test") {
     // Use JUnit Jupiter for unit tests.
     useJUnitPlatform()
+}
+
+jacoco {
+    toolVersion = "0.8.8"
+    reportsDirectory.set(layout.buildDirectory.dir("mergedReportDir"))
+}
+
+tasks.check {
+    // generate reports after running tests
+    finalizedBy(tasks.jacocoTestReport)
+}
+
+tasks.jacocoTestReport {
+
+    reports {
+        // activate jacoco xml for codecov
+        xml.required.set(true)
+        html.required.set(true)
+    }
+
+    // make sure tests run before generating reports
+    dependsOn(tasks.check)
 }
 
 signing {

@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package com.etrusted.gradle.trustbadge.config
+package de.trustedshops.gradle.trustbadge.config
 
 import groovy.json.JsonSlurper
 import org.gradle.api.Plugin
@@ -33,46 +33,52 @@ import java.io.File
  * Gradle plugin to read the client id and client secret provided by host project in json file
  * And provide them to Trustbadge Android Library as gradle settings.
  */
+
+internal const val propFileName = "trustbadge.properties"
+internal const val jsonFileName = "trustbadge-config.json"
+internal const val keyClientId = "client_id"
+internal const val keyClientSecret = "client_secret"
+
 class ProduceConfigPlugin: Plugin<Project> {
-
-    private val propFileName = "trustbadge.properties"
-    private val jsonFileName = "trustbadge-config.json"
-    private val keyClientId = "client_id"
-    private val keyClientSecret = "client_secret"
-
-    private fun decodeJsonAndProduceConfigFile(
-        inputPath: String,
-        outputPath: String,
-    ) {
-
-        println("decoding json")
-        val jsonFile = File(inputPath)
-        @Suppress("UNCHECKED_CAST")
-        val jsonObject = JsonSlurper().parse(jsonFile) as Map<String, String>
-
-        val clientId = jsonObject[keyClientId]
-        val clientSecret = jsonObject[keyClientSecret]
-
-        println("generating $propFileName file")
-        val propContent = "$keyClientId=$clientId\n$keyClientSecret=$clientSecret"
-        val outputFile = File(outputPath)
-        outputFile.createNewFile()
-        outputFile.writeText(propContent)
-    }
 
     override fun apply(project: Project) {
         project.tasks.register("produce") { task ->
-
             task.doLast {
-                project.copy { copySpec ->
-                    copySpec.from("${project.rootDir}/$jsonFileName")
-                    copySpec.into("${project.projectDir}")
-                }
+                val jsonFile = File(project.rootDir, jsonFileName)
+                val targetFile = File(project.projectDir, jsonFileName)
+                jsonFile.copyToTargetIfNotIdentical(targetFile)
                 decodeJsonAndProduceConfigFile(
                     inputPath = "${project.projectDir}/$jsonFileName",
                     outputPath = "${project.projectDir}/$propFileName"
                 )
+                println("produce task finished")
             }
         }
     }
+}
+
+internal fun File.copyToTargetIfNotIdentical(target: File): Boolean {
+    return if (!this.readText().contentEquals(target.readText())) {
+        this.copyTo(target, overwrite = true)
+        true
+    } else { false }
+}
+
+internal fun decodeJsonAndProduceConfigFile(
+    inputPath: String,
+    outputPath: String,
+) {
+    println("decoding json")
+    val jsonFile = File(inputPath)
+    @Suppress("UNCHECKED_CAST")
+    val jsonObject = JsonSlurper().parse(jsonFile) as Map<String, String>
+
+    val clientId = jsonObject[keyClientId]
+    val clientSecret = jsonObject[keyClientSecret]
+
+    println("generating $propFileName file")
+    val propContent = "$keyClientId=$clientId\n$keyClientSecret=$clientSecret"
+    val outputFile = File(outputPath)
+    outputFile.createNewFile()
+    outputFile.writeText(propContent)
 }

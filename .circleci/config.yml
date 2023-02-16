@@ -1,4 +1,6 @@
 version: 2.1
+orbs:
+  codecov: codecov/codecov@3.2.4
 
 commands:
   restore_gradle_cache:
@@ -33,12 +35,8 @@ jobs:
             ./gradlew check
       - save_gradle_cache
 
-      - run:
-          name: Upload the report to Codecov
-          command: |
-            curl -Os https://uploader.codecov.io/latest/linux/codecov
-            chmod +x codecov
-            ./codecov -f build/mergedReportDir/test/jacocoTestReport.xml
+      - codecov/upload:
+          file: build/mergedReportDir/test/jacocoTestReport.xml
 
       - store_artifacts:
           path: build/mergedReportDir/test/jacocoTestReport.xml

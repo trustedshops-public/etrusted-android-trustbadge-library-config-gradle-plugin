@@ -27,6 +27,6 @@ Apply the plugin in your app's build.gradle:
 
 ```
 plugins {
-    id("com.etrusted.gradle.trustbadge.config.produce") version "0.0.01"
+    id("de.trustedshops.gradle.trustbadge.config.produce") version "0.0.01"
 }
 ```

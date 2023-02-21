@@ -57,12 +57,25 @@ class ProduceConfigPlugin: Plugin<Project> {
     }
 }
 
+/**
+ * Copies content of this file to [target] if it is different.
+ *
+ * @returns true if the file was created/overwritten, or false if the target was not different.
+ */
 internal fun File.copyToTargetIfNotIdentical(target: File): Boolean {
-    return if (!this.readText().contentEquals(target.readText())) {
-        if (!target.exists()) { target.createNewFile() }
+    return if (target.exists()) {
+        if (this.readText().contentEquals(target.readText())) {
+            false
+        }
+        else {
+            this.copyTo(target, overwrite = true)
+            true
+        }
+    } else {
+        target.createNewFile()
         this.copyTo(target, overwrite = true)
         true
-    } else { false }
+    }
 }
 
 internal fun decodeJsonAndProduceConfigFile(

@@ -126,4 +126,24 @@ class ProduceConfigPluginTest {
         // assert
         assertFalse(isNewFileCreated)
     }
+
+    @Test fun `copy file to target creates new file if target does not exist`() {
+
+        // arrange
+        val sourceContent = "Cologne"
+
+        val sourceFile = File(projectDir.path, "fakeSource.md").apply {
+            createNewFile()
+            writeText(sourceContent)
+        }
+        val targetFile = File(projectDir.path, "fakeTarget.md")
+        println(sourceFile.readText())
+
+        // act
+        val isNewFileCreated = sourceFile.copyToTargetIfNotIdentical(targetFile)
+
+        // assert
+        assertTrue(targetFile.exists())
+        assertTrue(isNewFileCreated)
+    }
  }

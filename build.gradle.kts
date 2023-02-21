@@ -23,7 +23,7 @@
  */
 
 group = "de.trustedshops.gradle.trustbadge"
-version = "0.0.01"
+version = "0.0.02"
 
 plugins {
     `java-gradle-plugin`

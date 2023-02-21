@@ -59,6 +59,7 @@ class ProduceConfigPlugin: Plugin<Project> {
 
 internal fun File.copyToTargetIfNotIdentical(target: File): Boolean {
     return if (!this.readText().contentEquals(target.readText())) {
+        if (!target.exists()) { target.createNewFile() }
         this.copyTo(target, overwrite = true)
         true
     } else { false }

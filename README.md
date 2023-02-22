@@ -1,6 +1,6 @@
 # Trustbadge Config Gradle Plugin
 [![GitHub License](https://img.shields.io/badge/license-MIT-lightgrey.svg)](https://github.com/trustedshops-public/etrusted-android-trustbadge-library-config-gradle-plugin/blob/main/LICENSE)
-![Gradle Plugin Portal](https://img.shields.io/gradle-plugin-portal/v/etrusted-android-trustbadge-library-config-gradle-plugin)
+![Gradle Plugin Portal](https://img.shields.io/gradle-plugin-portal/v/de.trustedshops.gradle.trustbadge.config.produce)
 [![codecov](https://codecov.io/gh/trustedshops-public/etrusted-android-trustbadge-library-config-gradle-plugin/branch/main/graph/badge.svg?token=xhHiZ1MCYz)](https://codecov.io/gh/trustedshops-public/etrusted-android-trustbadge-library-config-gradle-plugin)
 
 > This project is currently work in progress and only used by a few
@@ -27,6 +27,6 @@ Apply the plugin in your app's build.gradle:
 
 ```
 plugins {
-    id("de.trustedshops.gradle.trustbadge.config.produce") version "0.0.01"
+    id("de.trustedshops.gradle.trustbadge.config.produce") version "(insert version here)"
 }
 ```

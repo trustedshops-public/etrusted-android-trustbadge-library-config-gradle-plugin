@@ -27,7 +27,7 @@ version = "0.0.03"
 
 plugins {
     `java-gradle-plugin`
-    id("org.jetbrains.kotlin.jvm") version "1.7.10"
+    id("org.jetbrains.kotlin.jvm") version "1.8.10"
     signing
     id("com.gradle.plugin-publish") version "1.1.0"
     jacoco

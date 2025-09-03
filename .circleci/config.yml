@@ -24,7 +24,7 @@ commands:
 jobs:
   run-codecov:
     docker:
-      - image: cimg/openjdk:11.0.28
+      - image: cimg/openjdk:21.0.8
     resource_class: small
     steps:
       - checkout
